@@ -133,3 +133,4 @@ C:\Users\Ghislain_Lewafal\Documents\le_code\deliveryDotnet\ProductService\bin\De
 C:\Users\Ghislain_Lewafal\Documents\le_code\deliveryDotnet\ProductService\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\Ghislain_Lewafal\Documents\le_code\deliveryDotnet\ProductService\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 C:\Users\Ghislain_Lewafal\Documents\le_code\deliveryDotnet\ProductService\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+C:\Users\Ghislain_Lewafal\Documents\le_code\deliveryDotnet\ProductService\obj\Debug\net8.0\ProductService.sourcelink.json

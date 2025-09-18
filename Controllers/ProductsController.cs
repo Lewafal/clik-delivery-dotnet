@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductService.Data;
 using ProductService.Models;
+using ProductService.Exceptions;
 
 namespace ProductService.Controllers
 {
@@ -25,7 +26,9 @@ namespace ProductService.Controllers
         public async Task<ActionResult<Product>> Get(int id)
         {
             var product = await _db.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
-            if (product == null) return NotFound();
+            //Gestion centralisée des exceptions
+            if (product == null) throw new NotFoundException($"Product with id {id} not found");
+            //if (product == null) return NotFound();
             return Ok(product);
         }
 
@@ -45,7 +48,10 @@ namespace ProductService.Controllers
         {
             if (id != update.Id) return BadRequest("Id mismatch.");
             var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == id);
-            if (product == null) return NotFound();
+            //Gestion centralisée des exceptions
+            if (product == null) throw new NotFoundException($"Product with id {id} not found");
+
+            //if (product == null) return NotFound();
 
             // Mise à jour simple
             product.Name = update.Name;
@@ -63,7 +69,9 @@ namespace ProductService.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _db.Products.FindAsync(id);
-            if (product == null) return NotFound();
+            //Gestion centralisée des exception
+            if (product == null) throw new NotFoundException($"Product with id {id} not found");
+            //if (product == null) return NotFound();
 
             _db.Products.Remove(product);
             await _db.SaveChangesAsync();
@@ -71,11 +79,14 @@ namespace ProductService.Controllers
         }
 
         // Optionnel : endpoint atomique pour réserver/décrémenter le stock (utile pour orders)
-        [HttpPost("{id:int}/reserve")]
-        public async Task<IActionResult> Reserve(int id, [FromQuery] int qty = 1)
+        [HttpPost("{id:int}/{qty:int}/reserve")]
+        public async Task<IActionResult> Reserve(int id, int qty)
         {
             var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == id);
-            if (product == null) return NotFound();
+            // Gestion centralisée des exceptions 
+            if (product == null) throw new NotFoundException($"Product with id {id} not found");
+
+            //if (product == null) return NotFound();
             if (product.Stock < qty) return BadRequest("Insufficient stock.");
 
             product.Stock -= qty;

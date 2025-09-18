@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using ProductService.Data;
+using ProductService.Middleware;
+
 var builder=WebApplication.CreateBuilder(args);
+
 
 //Services
 builder.Services.AddControllers(); 
@@ -38,6 +41,8 @@ app.UseCors("AllowAll");
 
 app.UseAuthorization();
 app.MapControllers();
+
+app.UseGlobalExceptionHandler();
 
 app.Run();
 

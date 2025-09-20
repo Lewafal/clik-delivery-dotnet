@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProductService.Data;
 using ProductService.Middleware;
+using ProductService.Services;
 
 var builder=WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,8 @@ var builder=WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(); 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<SupplierService>();
+
 
 //CORS (dev)
 builder.Services.AddCors(options =>
@@ -38,11 +41,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
-
+app.UseGlobalExceptionHandler();
 app.UseAuthorization();
 app.MapControllers();
 
-app.UseGlobalExceptionHandler();
+
 
 app.Run();
 

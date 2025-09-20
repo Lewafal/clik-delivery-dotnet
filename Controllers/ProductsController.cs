@@ -22,8 +22,8 @@ namespace ProductService.Controllers
         }
 
         // GET /api/products/{id}
-        [HttpGet("{id:int}")]
-        public async Task<ActionResult<Product>> Get(int id)
+        [HttpGet("{id:Guid}")]
+        public async Task<ActionResult<Product>> Get(Guid id)
         {
             var product = await _db.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
             //Gestion centralisée des exceptions
@@ -43,8 +43,8 @@ namespace ProductService.Controllers
         }
 
         // PUT /api/products/{id}
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Product update)
+        [HttpPut("{id:Guid}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] Product update)
         {
             if (id != update.Id) return BadRequest("Id mismatch.");
             var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == id);
@@ -65,8 +65,8 @@ namespace ProductService.Controllers
         }
 
         // DELETE /api/products/{id}
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id:Guid}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
             var product = await _db.Products.FindAsync(id);
             //Gestion centralisée des exception
@@ -79,8 +79,8 @@ namespace ProductService.Controllers
         }
 
         // Optionnel : endpoint atomique pour réserver/décrémenter le stock (utile pour orders)
-        [HttpPost("{id:int}/{qty:int}/reserve")]
-        public async Task<IActionResult> Reserve(int id, int qty)
+        [HttpPost("{id:Guid}/{qty:int}/reserve")]
+        public async Task<IActionResult> Reserve(Guid id, int qty)
         {
             var product = await _db.Products.FirstOrDefaultAsync(p => p.Id == id);
             // Gestion centralisée des exceptions 

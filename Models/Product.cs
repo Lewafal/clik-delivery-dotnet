@@ -5,7 +5,7 @@ namespace ProductService.Models
 {
     public class Product 
     {
-        public int Id {get; set;}
+        public Guid Id { get; set; }
 
         [Required, MaxLength(200)]
         public string Name {get; set;} = string.Empty; 
@@ -17,8 +17,9 @@ namespace ProductService.Models
 
 
         //Clé étrangére sur les fournisseurs 
-        public int? SupplierId {get; set;}
+        public Guid SupplierId {get; set;}
+        public Supplier? Supplier { get; set; }
 
-        public DateTime CreateAt {get; set;} = DateTime.UtcNow; 
+        public DateTime CreateAt { get; set; } = DateTime.UtcNow; 
     }
 }
